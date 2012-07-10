@@ -48,7 +48,7 @@ class App {
 		$expires = $this->account->getExpiry($data);
 		$chars = $data->result->rowset;
 		foreach ($chars->row as $char => $values) {
-			print_r($values);
+			print_r($values->attributes());
 		}
 		
 	}
