@@ -49,6 +49,9 @@ class Account extends EVEAPI {
 		$args = array("keyID"=>$this->id,"vCode"=>$this->vcode);
 		return $this->call("account", "Characters", $args);
 	}
+	function selectCharacter($charID) {
+		// Set cookie to hold character ID
+	}
 }
 
 class Character extends EVEAPI {
