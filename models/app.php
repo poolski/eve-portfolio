@@ -58,10 +58,13 @@ class App {
 		$data = $this->account->characters();
 		$expires = $this->account->getExpiry($data);
 		$chars = $data['result']['rowset']['value'];
+		$ret = array();
 		foreach ($chars as $char) {
-			print_r($char);
+			foreach($char as $toon) {
+				$ret[] = $toon['attributes'];
+			}
 		}
-
+		return $ret;
 	}
 	function selectCharacter($charID) {
 

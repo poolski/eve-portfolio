@@ -34,7 +34,7 @@ class EVEAPI {
 			return $this->process($ret = substr(preg_replace($pattern,'<?xml',$ret),0,-6));
 		}
 	}
-	function process($xml) {
+	private function process($xml) {
 		$ret = $this->xmlToArray(simplexml_load_string($xml));
 		return $ret['eveapi'];
 	}
