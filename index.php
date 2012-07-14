@@ -1,8 +1,8 @@
 <?php
 include("models/app.php");
 
-$app = new App("210429", "TwEwWA3j9EBaTgPSI5PynHp7jP2LGUGWROsUYCbOfXlXzfTFE14vmJ8fbY0vCTmw");
-$char = new Character("210429", "TwEwWA3j9EBaTgPSI5PynHp7jP2LGUGWROsUYCbOfXlXzfTFE14vmJ8fbY0vCTmw");
+$app = new App(UID, VCODE);
+$char = new Character(UID, VCODE);
 $items = array(35,36,37,43);
 
 //print_r($app->getAssetPrices());
