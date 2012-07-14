@@ -3,6 +3,7 @@ include("ecapi.php");
 include("eveapi.php");
 include("models/utils.php");
 include("configs/config.php");
+include("includes/mysql.php");
 
 class App {
 	var $account;
