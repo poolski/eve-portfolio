@@ -1,6 +1,7 @@
 <?php
 include("ecapi.php");
 include("eveapi.php");
+include("models/utils.php");
 
 class App {
 	var $account;
@@ -21,24 +22,34 @@ class App {
 	}
 	function getAssetPrices() {
 		$assets = $this->character->assetList();
-		$array = $this->character->process($assets)->result->rowset;
-		foreach($array->children() as $rows) {
-			print_r(array_search('60003760',$rows));
+		$items = array();
+		$prices = array();
+		$i = 0;
+		foreach($this->search($assets, 'typeID') as $item) {
+			//echo($i.": ".$item['itemID']."<br>");
+			$items[] = $item['typeID'];
 		}
-		//print_r($array->result->rowset);
-		//$this->market->get_price($itemID);
+		foreach ($items as $item) {
+			//echo($item."<br>");
+			$prices[] = $this->market->get_price(array($item));
+		}
+		return $prices;
 	}
-	function search($array, $key, $value)
+	function getSinglePrice($item) {
+		$prices = array();
+		$prices[] = $this->market->get_price(array($item));
+	}
+	function search($array, $key)
 	{
 		$results = array();
 
 		if (is_array($array))
 		{
-			if (isset($array[$key]) && $array[$key] == $value)
+			if (isset($array[$key]))
 				$results[] = $array;
 
 			foreach ($array as $subarray)
-				$results = array_merge($results, search($subarray, $key, $value));
+				$results = array_merge($results, $this->search($subarray, $key));
 		}
 
 		return $results;
@@ -46,16 +57,14 @@ class App {
 	function listCharacters() {
 		$data = $this->account->characters();
 		$expires = $this->account->getExpiry($data);
-		$chars = $data->result->rowset;
-		foreach ($chars->row as $char => $values) {
-			print_r($values->attributes());
+		$chars = $data['result']['rowset']['value'];
+		foreach ($chars as $char) {
+			print_r($char);
 		}
-		
+
 	}
 	function selectCharacter($charID) {
-		
+
 	}
 }
 $app = new App("210429", "TwEwWA3j9EBaTgPSI5PynHp7jP2LGUGWROsUYCbOfXlXzfTFE14vmJ8fbY0vCTmw");
-$app->listCharacters();
-?>

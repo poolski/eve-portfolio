@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(E_WARN);
 ini_set('display_errors','On');
 class xmlrpc{
 	function xmlrpc() {

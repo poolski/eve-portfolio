@@ -118,7 +118,8 @@ class Character extends EVEAPI {
 
 	function assetList() {
 		$args = array("keyID"=>$this->id,"vCode"=>$this->vcode,"characterID"=>$this->characterID);
-		return $this->call("char","AssetList",$args);
+		$result = $this->call("char","AssetList",$args);
+		$assets = array();
+		return $result;
 	}
 }
-?>
