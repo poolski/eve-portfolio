@@ -10,6 +10,7 @@ class App {
 
     var $account;
     var $character;
+    var $wallet;
     var $market;
     var $db;
     var $id;
@@ -17,15 +18,16 @@ class App {
     var $charID;
 
     function App($id, $vcode) {
+        $this->charID = 630723329;
         $this->account = new Account($id, $vcode);
         $this->character = new Character($id, $vcode);
+        $this->wallet = new Wallet($id, $vcode, $this->charID);
         $this->market = new market();
         $this->id = $id;
         $this->db = Database::obtain(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
         $this->db->connect();
         $this->vcode = $vcode;
         // Change this to be pulled from an actual account query later
-        $this->charID = 630723329;
     }
 
     function getAssetPrices() {
@@ -100,9 +102,19 @@ class App {
         }
         $sql = substr($sql, 0, -1);
         $sql .= ")";
-//$sql = "SELECT * FROM items WHERE typeID=$typeID";
         $result = $this->db->fetch_array($this->db->escape($sql));
         return $result[0]['itemName'];
+    }
+
+    function getBalance() {
+        $result = $this->wallet->getAccountBalance();
+        $timestamp = $result['cachedUntil'];
+        $data = $result['result']['rowset']['value']['row']['attributes'];
+        $ret = array($timestamp);
+        foreach($data as $dataItem) {
+            $ret[] = $dataItem;
+        }
+        return $ret;
     }
 
 }

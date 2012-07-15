@@ -124,8 +124,16 @@ class Character extends EVEAPI {
 	}
 }
 
-class Item {
-	function getItemName($typeID) {
-		
-	}
+class Wallet extends EVEAPI {
+    var $characterID;
+    function __construct($id,$vcode,$char) {
+        parent::EVEAPI($id, $vcode);
+        $this->characterID = $char;
+    }
+    
+    function getAccountBalance() {
+        $args = array("keyID"=>$this->id,"vCode"=>$this->vcode,"characterID"=>$this->characterID);
+        $result = $this->call("char","AccountBalance",$args);
+        return $result;
+    }
 }
