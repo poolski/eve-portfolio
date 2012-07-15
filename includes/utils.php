@@ -1,72 +1,69 @@
-<?php 
+<?php
+
 include_once("includes/mysql.php");
 
 class Util {
-	var $db;
-	
-	function __construct(){
-		$this->db = Database::obtain(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
-	}
-	/*
-	* Convert a SimpleXML object into an array (last resort).
-	*
-	* @access public
-	* @param object $xml
-	* @param boolean $root - Should we append the root node into the array
-	* @return array
-	*/
-	function xmlToArray($xml, $root = true) {
-		if (!$xml->children()) {
-			return (string)$xml;
-		}
 
-		$array = array();
-		foreach ($xml->children() as $element => $node) {
-			$totalElement = count($xml->{$element});
+    var $db;
 
-			if (!isset($array[$element])) {
-				$array[$element] = "";
-			}
+    function __construct() {
+        $this->db = Database::obtain(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+    }
 
-			// Has attributes
-			if ($attributes = $node->attributes()) {
-				$data = array(
-						'attributes' => array(),
-						'value' => (count($node) > 0) ? $this->xmlToArray($node, false) : (string)$node
-						// 'value' => (string)$node (old code)
-				);
+    /*
+     * Convert a SimpleXML object into an array (last resort).
+     *
+     * @access public
+     * @param object $xml
+     * @param boolean $root - Should we append the root node into the array
+     * @return array
+     */
 
-				foreach ($attributes as $attr => $value) {
-					$data['attributes'][$attr] = (string)$value;
-				}
+    function xmlToArray($xml, $root = true) {
+        if (!$xml->children()) {
+            return (string) $xml;
+        }
 
-				if ($totalElement > 1) {
-					$array[$element][] = $data;
-				} else {
-					$array[$element] = $data;
-				}
+        $array = array();
+        foreach ($xml->children() as $element => $node) {
+            $totalElement = count($xml->{$element});
 
-				// Just a value
-			} else {
-				if ($totalElement > 1) {
-					$array[$element][] = $this->xmlToArray($node, false);
-				} else {
-					$array[$element] = $this->xmlToArray($node, false);
-				}
-			}
-		}
+            if (!isset($array[$element])) {
+                $array[$element] = "";
+            }
 
-		if ($root) {
-			return array($xml->getName() => $array);
-		} else {
-			return $array;
-		}
-	}
-	function getItemName($typeID) {
-		$this->db->connect();
-		$this->db = Database::obtain();
-		$sql = "SELECT * FROM items WHERE typeID=$typeID";
-		$result = $this->db->fetch_array($this->db->escape($sql));
-		return $result[0]['itemName'];
-	}
+            // Has attributes
+            if ($attributes = $node->attributes()) {
+                $data = array(
+                    'attributes' => array(),
+                    'value' => (count($node) > 0) ? $this->xmlToArray($node, false) : (string) $node
+                        // 'value' => (string)$node (old code)
+                );
+
+                foreach ($attributes as $attr => $value) {
+                    $data['attributes'][$attr] = (string) $value;
+                }
+
+                if ($totalElement > 1) {
+                    $array[$element][] = $data;
+                } else {
+                    $array[$element] = $data;
+                }
+
+                // Just a value
+            } else {
+                if ($totalElement > 1) {
+                    $array[$element][] = $this->xmlToArray($node, false);
+                } else {
+                    $array[$element] = $this->xmlToArray($node, false);
+                }
+            }
+        }
+
+        if ($root) {
+            return array($xml->getName() => $array);
+        } else {
+            return $array;
+        }
+    }
 }
