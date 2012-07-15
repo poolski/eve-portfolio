@@ -1,5 +1,12 @@
 <?php 
+include_once("includes/mysql.php");
+
 class Util {
+	var $db;
+	
+	function __construct(){
+		$this->db = Database::obtain(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+	}
 	/*
 	* Convert a SimpleXML object into an array (last resort).
 	*
@@ -54,5 +61,12 @@ class Util {
 		} else {
 			return $array;
 		}
+	}
+	function getItemName($typeID) {
+		$this->db->connect();
+		$this->db = Database::obtain();
+		$sql = "SELECT * FROM items WHERE typeID=$typeID";
+		$result = $this->db->fetch_array($this->db->escape($sql));
+		return $result[0]['itemName'];
 	}
 }

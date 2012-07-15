@@ -1,15 +1,9 @@
 <?php
-error_reporting(E_WARN);
-ini_set('display_errors','On');
 class xmlrpc{
 	function xmlrpc() {
 		$this->host = "api.eve-central.com";
 		$this->port = 80;
 		$this->basespace = "/api";
-	}
-
-	function encode_request($method, $args=array()) {
-		return xmlrpc_encode_request($method, $args);
 	}
 
 	function call($method,$args) {
@@ -60,7 +54,7 @@ class market extends xmlrpc {
 			$sell = $item -> sell -> min;
 			$margin = round(100-(float)$buy/(float)$sell*100,2);
 			$timestamp = date("Y-m-d H:i:s");
-			$prices[] = array("typeID" => (int)$id, "timestamp" => $timestamp, "buy" => (float)$buy,"sell" => (float)$sell, "margin" => $margin);
+			$prices[] = array("typeID" => (int)$id, "name" => "", "timestamp" => $timestamp, "buy" => (float)$buy,"sell" => (float)$sell, "margin" => $margin);
 		}
 		return $prices;
 	}

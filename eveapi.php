@@ -123,3 +123,9 @@ class Character extends EVEAPI {
 		return $result;
 	}
 }
+
+class Item {
+	function getItemName($typeID) {
+		
+	}
+}

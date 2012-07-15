@@ -1,9 +1,9 @@
 <?php
-include("../eveapi.php");
+include("includes/app.php");
 	class UserAccount {
 		var $keyID;
 		var $vcode;
-		function listChars() {
+		function listAccountChars() {
 			/* 
 			 * 1. Select associated characters and get charIDs from DB
 			 * 2. Run query to get net worth from cached data/live info (in ecapi.php)
