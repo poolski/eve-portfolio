@@ -45,16 +45,15 @@ class market extends xmlrpc {
 		$request = $ids . "&usesystem=30000142";
 		$results = $this->call("marketstat",$request);
 		$xml = simplexml_load_string($results);
-
 		$typeresults = $xml -> marketstat -> type;
 		$prices = array();
+                $prices[0] = date("Y-m-d H:i:s");
 		foreach ($typeresults as $item) {
 			$id = $item -> attributes();
 			$buy = $item -> buy -> max;
 			$sell = $item -> sell -> min;
 			$margin = round(100-(float)$buy/(float)$sell*100,2);
-			$timestamp = date("Y-m-d H:i:s");
-			$prices[] = array("typeID" => (int)$id, "name" => "", "timestamp" => $timestamp, "buy" => (float)$buy,"sell" => (float)$sell, "margin" => $margin);
+			$prices[] = array("typeID" => (int)$id, "name" => "", "buy" => (float)$buy,"sell" => (float)$sell, "margin" => $margin);
 		}
 		return $prices;
 	}

@@ -71,15 +71,18 @@ class shared {
     function standardise($result) {
         $timestamp = $result['cachedUntil'];
         //$data = $result['result']['rowset']['value']['row'];
-        $data = $result['result']['rowset']['value'];
-        $ret[0] = $timestamp;
-        if (count($data['row'] > 2)) {
+        if (isset($result['result'])) {
+            $data = $result['result']['rowset']['value'];
+            $ret[0] = $timestamp;
             foreach ($data['row'] as $dataItem) {
-                $ret[] = $dataItem;
+                if (isset($dataItem['attributes'])) {
+                    $ret[] = $dataItem['attributes'];
+                } else {
+                    $ret[] = $dataItem;
+                }
             }
-        }
-        else {
-            $ret[] = array($dataItem);
+        } else {
+            $ret = $result;
         }
         //$ret[] = $data;
         return $ret;
