@@ -1,10 +1,13 @@
 <?php
+include_once("includes/shared.php");
 class EVEAPI {
+    var $shared;
 	function EVEAPI($id,$vcode) {
 		$this->host = "api.eveonline.com";
 		$this->port = "443";
 		$this->id = $id;
 		$this->vcode = $vcode;
+                $this->shared = new shared();
 	}
 	/* Calls the function on the EVE API
 	 * @param namespace: choose which function group you're calling
@@ -35,66 +38,11 @@ class EVEAPI {
 		}
 	}
 	private function process($xml) {
-		$ret = $this->xmlToArray(simplexml_load_string($xml));
+		$ret = $this->shared->xmlToArray(simplexml_load_string($xml));
 		return $ret['eveapi'];
 	}
 	function getExpiry($object) {
 		return $object['cachedUntil'];
-	}
-	/*
-	 * Convert a SimpleXML object into an array (last resort).
-	*
-	* @access public
-	* @param object $xml
-	* @param boolean $root - Should we append the root node into the array
-	* @return array
-	*/
-	private function xmlToArray($xml, $root = true) {
-		if (!$xml->children()) {
-			return (string)$xml;
-		}
-	
-		$array = array();
-		foreach ($xml->children() as $element => $node) {
-			$totalElement = count($xml->{$element});
-	
-			if (!isset($array[$element])) {
-				$array[$element] = "";
-			}
-	
-			// Has attributes
-			if ($attributes = $node->attributes()) {
-				$data = array(
-						'attributes' => array(),
-						'value' => (count($node) > 0) ? $this->xmlToArray($node, false) : (string)$node
-						// 'value' => (string)$node (old code)
-				);
-	
-				foreach ($attributes as $attr => $value) {
-					$data['attributes'][$attr] = (string)$value;
-				}
-	
-				if ($totalElement > 1) {
-					$array[$element][] = $data;
-				} else {
-					$array[$element] = $data;
-				}
-	
-				// Just a value
-			} else {
-				if ($totalElement > 1) {
-					$array[$element][] = $this->xmlToArray($node, false);
-				} else {
-					$array[$element] = $this->xmlToArray($node, false);
-				}
-			}
-		}
-	
-		if ($root) {
-			return array($xml->getName() => $array);
-		} else {
-			return $array;
-		}
 	}
 }
 class Account extends EVEAPI {
@@ -119,7 +67,6 @@ class Character extends EVEAPI {
 	function assetList() {
 		$args = array("keyID"=>$this->id,"vCode"=>$this->vcode,"characterID"=>$this->characterID);
 		$result = $this->call("char","AssetList",$args);
-		$assets = array();
 		return $result;
 	}
 }

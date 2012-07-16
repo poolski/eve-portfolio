@@ -4,6 +4,7 @@ include("ecapi.php");
 include("eveapi.php");
 include("includes/utils.php");
 include("configs/config.php");
+include_once("includes/shared.php");
 include_once("includes/mysql.php");
 
 class App {
@@ -12,6 +13,7 @@ class App {
     var $character;
     var $wallet;
     var $market;
+    var $shared;
     var $db;
     var $id;
     var $vcode;
@@ -23,6 +25,7 @@ class App {
         $this->character = new Character($id, $vcode);
         $this->wallet = new Wallet($id, $vcode, $this->charID);
         $this->market = new market();
+        $this->shared = new shared();
         $this->id = $id;
         $this->db = Database::obtain(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
         $this->db->connect();
@@ -74,15 +77,16 @@ class App {
 
     function listCharacters() {
         $data = $this->account->characters();
-        $expires = $this->account->getExpiry($data);
-        $chars = $data['result']['rowset']['value'];
-        $ret = array();
-        foreach ($chars as $char) {
-            foreach ($char as $toon) {
-                $ret[] = $toon['attributes'];
-            }
-        }
-        return $ret;
+        return $this->shared->standardise($data);
+        //$expires = $this->account->getExpiry($data);
+        //$chars = $data['result']['rowset']['value'];
+        //$ret = array();
+        //foreach ($chars as $char) {
+        //    foreach ($char as $toon) {
+        //        $ret[] = $toon['attributes'];
+        //    }
+        //}
+        //return $ret;
     }
 
     function selectCharacter($charID) {
@@ -108,11 +112,12 @@ class App {
 
     function getBalance() {
         $result = $this->wallet->getAccountBalance();
-        $timestamp = $result['cachedUntil'];
-        $data = $result['result']['rowset']['value']['row']['attributes'];
-        $ret[] = $timestamp;
-        $ret[] = $data;
-        return $ret;
+        return $this->shared->standardise($result);
+        //$timestamp = $result['cachedUntil'];
+        //$data = $result['result']['rowset']['value']['row']['attributes'];
+        //$ret[] = $timestamp;
+        //$ret[] = $data;
+        //return $ret;
     }
 
 }
