@@ -21,5 +21,5 @@ foreach($prices as $item) {
 echo("</table>");
 
 print_r($app->getBalance());
-//print_r($app->listCharacters());
+print_r($app->listCharacters());
 ?>

@@ -110,10 +110,8 @@ class App {
         $result = $this->wallet->getAccountBalance();
         $timestamp = $result['cachedUntil'];
         $data = $result['result']['rowset']['value']['row']['attributes'];
-        $ret = array($timestamp);
-        foreach($data as $dataItem) {
-            $ret[] = $dataItem;
-        }
+        $ret[] = $timestamp;
+        $ret[] = $data;
         return $ret;
     }
 
