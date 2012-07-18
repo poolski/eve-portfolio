@@ -27,6 +27,7 @@ class EVEAPI {
 			$out = "GET /".$namespace."/".$function.".xml.aspx?".$arguments." HTTP/1.1\r\n";
 			$out .= "Host: " . $this->host . "\r\n";
 			$out .= "Connection: Close\r\n\r\n";
+			print_r($out);
 			fwrite($fp, $out);
 			$ret = '';
 			while (!feof($fp)) {
@@ -38,6 +39,7 @@ class EVEAPI {
 		}
 	}
 	private function process($xml) {
+		print_r($xml);
 		$ret = $this->shared->xmlToArray(simplexml_load_string($xml));
 		return $ret['eveapi'];
 	}

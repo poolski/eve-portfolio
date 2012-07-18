@@ -53,7 +53,7 @@ class market extends xmlrpc {
 			$buy = $item -> buy -> max;
 			$sell = $item -> sell -> min;
 			$margin = round(100-(float)$buy/(float)$sell*100,2);
-			$prices[] = array("typeID" => (int)$id, "name" => "", "buy" => (float)$buy,"sell" => (float)$sell, "margin" => $margin);
+			$prices[] = array("typeID" => (int)$id, "name" => "", "buy" => number_format((float)$buy,2),"sell" => number_format((float)$sell,2), "margin" => $margin);
 		}
 		return $prices;
 	}
