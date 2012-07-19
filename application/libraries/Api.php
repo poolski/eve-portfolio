@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 
 class API {
 	/* Calls the function on the EVE API
@@ -10,7 +10,7 @@ class API {
 	function call($dest,$namespace="char",$function,$args) {
 		switch ($dest) {
 			case "eveapi":
-				return $this->callEVEApi($namespace,$function,$args);
+				return $this->callEveApi($namespace,$function,$args);
 				break;
 			case "ecapi":
 				return $this->callEveCentralApi($function,$args);
@@ -62,9 +62,9 @@ class API {
 	private function process($source,$result) {
 		if($source == "eveapi") {
 			$pattern="/^.*?(\<\?xml)/s";
-			$ret = substr(preg_replace($pattern,'<?xml',$result),0,-6);
-			$ret = $this->xmlToArray(simplexml_load_string($ret));
-			return $this->standardise($ret['eveapi']);
+			$ret = $this->xmlToArray(simplexml_load_string(substr(preg_replace($pattern,'<?xml',$result),0,-6)));
+			return $ret['eveapi'];
+			//return $this->standardise($ret['eveapi']);
 		}
 		else if($source == "ecapi") {
 			$pattern="/^.*?(\<\?xml)/s";

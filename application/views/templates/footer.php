@@ -1,4 +1,3 @@
-<div class="end"><strong>&copy; 2011</strong>	
-</div>
+	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
 </body>
 </html>
