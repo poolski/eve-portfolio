@@ -6,6 +6,7 @@ class Character_model extends CI_Model {
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('api');
+		
 		# TODO: load keyID and vCode from user session/DB
 	}
 	public function accountBalance($characterID) {

@@ -4,13 +4,14 @@ class Character extends CI_Controller {
 		parent::__construct();
 		$this->load->model('eveapi/character_model');
 		$this->load->model('eveapi/account_model');
+		$this->load->model('evecentral/market_model');
 	}
 	public function assets($characterID) {
 		$data['title'] = "Assets for: ".$characterID;
 		$items = array();
 		$result = $this->character_model->listAssets($characterID);
 		foreach ($this->search($result, 'typeID') as $item) {
-            $items[] = $item['typeID'];
+            $items[] = $this->market_model->getItemName($item['typeID']);
         }
 		//$data['characters'] = $this->account_model->characters();
 		$data['assets'] = $items;
