@@ -2,7 +2,6 @@
 class Character_model extends CI_Model {
 	var $keyID = "210429";
 	var $vCode = "TwEwWA3j9EBaTgPSI5PynHp7jP2LGUGWROsUYCbOfXlXzfTFE14vmJ8fbY0vCTmw";
-
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('api');
@@ -18,5 +17,10 @@ class Character_model extends CI_Model {
 	public function listAssets($characterID) {
 		$args = array("keyID"=>$this->keyID,"vCode"=>$this->vCode,"characterID"=>$characterID);
 		return $this->api->call("eveapi","char","AssetList",$args);
+	}
+
+	function characterSheet($characterID) {
+		$args = array("keyID"=>$this->keyID,"vCode"=>$this->vCode,"characterID"=>$characterID);
+		return $this->api->call("eveapi","char","CharacterSheet",$args);
 	}
 }

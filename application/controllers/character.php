@@ -6,6 +6,7 @@ class Character extends CI_Controller {
 		$this->load->model('eveapi/account_model');
 		$this->load->model('evecentral/market_model');
 	}
+
 	public function assets($characterID) {
 		$data['title'] = "Assets for: ".$characterID;
 		$items = array();
