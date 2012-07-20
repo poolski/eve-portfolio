@@ -28,6 +28,7 @@
   </div>
 
 	<div class="container">
+    <?php echo set_breadcrumb(); ?>
     <!-- Masthead
       ================================================== -->
       <header class="jumbotron subhead" id="overview">

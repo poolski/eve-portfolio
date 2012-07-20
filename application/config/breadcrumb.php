@@ -234,7 +234,7 @@ $config['exclude_segment'] = array();
  * it possible to return the breadcrumb in a list (<ul><li></li></ul>) or something else as configure below.
  * Set use_wrapper to TRUE to use this feature.
  */
-$config['use_wrapper'] = FALSE;
+$config['use_wrapper'] = TRUE;
 $config['wrapper'] = '<ul class="breadcrumb">|</ul>';
 $config['wrapper_inline'] = '<li>|</li>';
 
