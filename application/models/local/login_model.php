@@ -37,7 +37,7 @@ class Login_model extends CI_Model{
     }
     function check_isvalidated(){
         if(! $this->session->userdata('validated')){
-            redirect(base_url().'login');
+            redirect(base_url().'account/login');
         }
     }
 }

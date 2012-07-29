@@ -26,7 +26,8 @@ class Character extends CI_Controller {
 		$items = array();
 		$result = $this->character_model->listAssets($characterID);
 		if(array_key_exists('error', $result)) {
-			$this->index('That character either doesn\'t belong to this API key or you\'re a liar');
+			print_r($result);
+			//$this->index('That character either doesn\'t belong to this API key or you\'re a liar');
 		}
 		else {
 			foreach ($this->search($result, 'typeID') as $item) {

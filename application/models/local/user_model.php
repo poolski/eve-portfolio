@@ -54,7 +54,8 @@ class User_model extends CI_Model {
 	}
 
 	public function listAccountCharacters() {
-		$query = $this->db->get('characters');
+		$owner = $this->session->userdata('id');
+		$query = $this->db->get_where('characters',array('owner'=>$owner));
 		if($query->num_rows()>0) {
 			return $query->result_array();
 		}
@@ -63,8 +64,8 @@ class User_model extends CI_Model {
 		}
 	}
 
-	private function characterExists($charID) {
-		$query = $this->db->get_where('characters',array('characterID'=>$charID));
+	private function characterExists($characterID) {
+		$query = $this->db->get_where('characters',array('characterID'=>$characterID));
 		if(count($query->result())>0) {
 			return true;
 		}

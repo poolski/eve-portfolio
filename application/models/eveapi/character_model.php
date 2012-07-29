@@ -8,6 +8,17 @@ class Character_model extends CI_Model {
 		
 		# TODO: load keyID and vCode from user session/DB
 	}
+	private function getApiDetails($characterID) {
+		$query = $this->db->get_where('characters',array('characterID'=>$characterID));
+		if($query->num_rows() > 0) {
+			return $query->result_array()[0];
+		}
+		else {
+			return false;
+		}
+	}
+	// This one needs to be made more flexible so it pulls API details first from session (for initial adds)
+	// and then from DB for standard listing. 
 	public function accountBalance($characterID) {
 		$args = array("keyID"=>$this->keyID,"vCode"=>$this->vCode,"characterID"=>$characterID);
 		$ret = $this->api->call("eveapi","char","AccountBalance",$args);
@@ -15,16 +26,29 @@ class Character_model extends CI_Model {
 	}
 
 	public function listAssets($characterID) {
-		$args = array("keyID"=>$this->keyID,"vCode"=>$this->vCode,"characterID"=>$characterID);
-		return $this->api->call("eveapi","char","AssetList",$args);
+		$api = $this->getApiDetails($characterID);
+		if($api) {
+			$args = array("keyID"=>$api['userid'],"vCode"=>$api['vcode'],"characterID"=>$characterID);
+			return $this->api->call("eveapi","char","AssetList",$args);
+		}
+		else {
+			return false;
+		}
 	}
 
-	function characterSheet($characterID) {
+	public function characterSheet($characterID) {
 		$args = array("keyID"=>$this->keyID,"vCode"=>$this->vCode,"characterID"=>$characterID);
 		return $this->api->call("eveapi","char","CharacterSheet",$args);
 	}
+
 	public function characterName($characterID) {
-		$result = $this->character_model->characterSheet($characterID);
-		return $result['result']['name'];
+		$charData = $this->getApiDetails($characterID);
+		if($charData) {
+			return $charData['name'];
+		}
+		else {
+			$result = $this->character_model->characterSheet($characterID);
+			return $result['result']['name'];
+		}
 	}
 }
