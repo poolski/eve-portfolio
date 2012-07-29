@@ -42,6 +42,17 @@ class User_model extends CI_Model {
 		}
 	}
 
+	public function deleteCharacter($characterID){
+		$owner = $this->session->userdata('id');
+		$query = $this->db->delete('characters',array('characterID'=>$characterID,'owner'=>$owner));
+		if($query->num_rows()==0) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
 	public function listAccountCharacters() {
 		$query = $this->db->get('characters');
 		if($query->num_rows()>0) {

@@ -1,7 +1,15 @@
 <div id="main">
-<ul>
+<table class="table table-striped table-condensed">
+	<thead>
+    	<tr>
+      		<th>ItemID</th>
+      		<th>Name</th>
+    	</tr>
+  	</thead>
+  	<tbody>
 <?php foreach ($assets as $item): ?>
-    <li><?php echo("ID: ".$item[0]['typeID'].", Name: ".$item[0]['itemName']);?></li>
+    <tr><?php echo("<td>".$item[0]['typeID']."</td><td>".$item[0]['itemName']."</td>");?></tr>
 <?php endforeach ?>
-</ul>
+	</tbody>
+</table>
 </div>

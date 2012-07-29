@@ -10,6 +10,13 @@ class Account extends CI_Controller {
 	}
 	public function index() {
 		$data['title'] = "Your characters";
+		if($this->session->flashdata('msg')=="") {
+			$data['msg'] = NULL;
+		}
+		else {
+			$data['msg'] = $this->session->flashdata('msg');
+		}
+		$data['alert_class'] = "alert-notice";
 		//$result = $this->account_model->characters();
 		$result = $this->user_model->listAccountCharacters();
 		$characters = array();
