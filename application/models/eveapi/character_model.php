@@ -23,4 +23,8 @@ class Character_model extends CI_Model {
 		$args = array("keyID"=>$this->keyID,"vCode"=>$this->vCode,"characterID"=>$characterID);
 		return $this->api->call("eveapi","char","CharacterSheet",$args);
 	}
+	public function characterName($characterID) {
+		$result = $this->character_model->characterSheet($characterID);
+		return $result['result']['name'];
+	}
 }

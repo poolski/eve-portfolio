@@ -6,7 +6,6 @@ public function __construct() {
 }
 
 function getItemName($itemID) {
-	$ret = array();
 	$query = $this->db->get_where('items',array("typeID"=>$itemID));
 	return $query->result_array();
 }

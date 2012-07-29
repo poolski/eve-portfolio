@@ -62,7 +62,9 @@ class API {
 	private function process($source,$result) {
 		if($source == "eveapi") {
 			$pattern="/^.*?(\<\?xml)/s";
-			$ret = $this->xmlToArray(simplexml_load_string(substr(preg_replace($pattern,'<?xml',$result),0,-6)));
+			$tmp = preg_replace($pattern,'<?xml',$result);
+			$rawXML = strstr($tmp,"</eveapi>",true)."</eveapi>";
+			$ret = $this->xmlToArray(simplexml_load_string($rawXML));
 			return $ret['eveapi'];
 			//return $this->standardise($ret['eveapi']);
 		}

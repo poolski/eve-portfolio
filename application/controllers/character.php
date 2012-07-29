@@ -5,13 +5,15 @@ class Character extends CI_Controller {
 		$this->load->model('eveapi/character_model');
 		$this->load->model('eveapi/account_model');
 		$this->load->model('evecentral/market_model');
+		$this->load->model('local/login_model');
+		$this->login_model->check_isvalidated();
 	}
 	public function index() {
 		redirect(base_url(),'location');
 	}
 
 	public function assets($characterID) {
-		$data['title'] = $this->characterName($characterID)."'s assets";
+		$data['title'] = $this->character_model->characterName($characterID)."'s assets";
 		$items = array();
 		$result = $this->character_model->listAssets($characterID);
 		foreach ($this->search($result, 'typeID') as $item) {
@@ -22,11 +24,6 @@ class Character extends CI_Controller {
 		$this->load->view('templates/header',$data);
 		$this->load->view('character/assets',$data);
 		$this->load->view('templates/footer');
-	}
-
-	private function characterName($characterID) {
-		$result = $this->character_model->characterSheet($characterID);
-		return $result['result']['name'];
 	}
 	private function search($array, $key) {
         $results = array();
