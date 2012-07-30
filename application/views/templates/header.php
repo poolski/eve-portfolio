@@ -33,7 +33,7 @@
       <?php } 
       if(isset($msg)) { ?>
       <div class="row">
-        <div class="span4">
+        <div class="span6">
           <?php echo ('<div class="alert '.$alert_class.'">
           <a class="close" data-dismiss="alert">x</a>'.$msg.'</div>');?>
         </div>

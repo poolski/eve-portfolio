@@ -14,11 +14,11 @@
 <!--End character list-->
 <? } ?>
 <ul class="nav pull-right">
-  <div class="btn-group">
-    <a class="btn dropdown-toggle btn-info btn-mini" data-toggle="dropdown" href="#">
-      <i class="icon-user icon-white"></i>
-      <?php echo($this->session->userdata('username'));?> - Manage
-      <b class="icon-chevron-down icon-white"></b>
+  <li class="divider-vertical"></li>
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      Your account
+      <b class="icon-off icon-white"></b>
     </a>
     <ul class="dropdown-menu">
       <li><a href="<?php echo base_url();?>account">My Characters</a></li>
@@ -26,5 +26,5 @@
       <li><di</li>
       <li><a href="<?php echo base_url();?>account/logout">Log out</a></li>
     </ul>
-  </div>
+  </ul>
 </ul>
