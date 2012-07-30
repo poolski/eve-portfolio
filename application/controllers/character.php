@@ -25,8 +25,9 @@ class Character extends CI_Controller {
 		else {
 			$items = array();
 			$result = $this->character_model->listAssets($characterID);
+			$attribs = $this->character_model->characterSheet($characterID);
 			if(!$result) {
-				$this->index('This character doesn\'t belong to you');
+				$this->index('That character either doesn\'t belong to this API key or you\'re a liar');
 			}
 			else {
 				foreach ($this->search($result, 'typeID') as $item) {
@@ -34,7 +35,7 @@ class Character extends CI_Controller {
 		        }
 				//$data['characters'] = $this->account_model->characters();
 				$data['assets'] = $items;
-
+				$data['attribs'] = $attribs;
 				$data['title'] = $this->character_model->characterName($characterID);
 				$this->load->view('templates/header',$data);
 				$this->load->view('character/index',$data);
