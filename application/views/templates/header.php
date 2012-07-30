@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title><?php echo $title ?></title>
+	<title><?php if(isset($title)) { echo $title; }?></title>
 	<?php 
 	echo(link_tag('static/css/bootstrap.css')); 
   echo(link_tag('static/css/default.css')); 
@@ -38,13 +38,17 @@
     <?php //echo set_breadcrumb(); ?>
     <!-- Masthead
       ================================================== -->
+      <?php if(isset($title)) { ?>
       <header class="jumbotron subhead" id="overview">
-        <h1><?php echo $title ?></h1>        
+        <h1><?php echo $title; ?></h1>        
       </header>
+      <?php } 
+      if(isset($msg)) { ?>
       <div class="row">
         <div class="span4">
-          <?php if(isset($msg)) echo ('<div class="alert '.$alert_class.'">
+          <?php echo ('<div class="alert '.$alert_class.'">
           <a class="close" data-dismiss="alert">x</a>'.$msg.'</div>');?>
         </div>
       </div>
+      <?php } ?>
 		
