@@ -18,6 +18,31 @@ class Character extends CI_Controller {
 		redirect(base_url());
 	}
 
+	public function detail($characterID = NULL) {
+		if(!$characterID) {
+			$this->index('You\'ll be wanting to choose a character!');
+		}
+		else {
+			$items = array();
+			$result = $this->character_model->listAssets($characterID);
+			if(!$result) {
+				$this->index('This character doesn\'t belong to you');
+			}
+			else {
+				foreach ($this->search($result, 'typeID') as $item) {
+		            $items[] = $this->market_model->getItemName($item['typeID']);
+		        }
+				//$data['characters'] = $this->account_model->characters();
+				$data['assets'] = $items;
+
+				$data['title'] = $this->character_model->characterName($characterID);
+				$this->load->view('templates/header',$data);
+				$this->load->view('character/index',$data);
+				$this->load->view('templates/footer');
+			}
+		}
+	}
+
 	public function assets($characterID = NULL) {
 		if(!$characterID) {
 			$this->index('Quit being a douche and hacking other peoples\' characters, you faggot');
@@ -25,9 +50,8 @@ class Character extends CI_Controller {
 		$data['title'] = $this->character_model->characterName($characterID)."'s assets";
 		$items = array();
 		$result = $this->character_model->listAssets($characterID);
-		if(array_key_exists('error', $result)) {
-			print_r($result);
-			//$this->index('That character either doesn\'t belong to this API key or you\'re a liar');
+		if(!$result) {
+			$this->index('That character either doesn\'t belong to this API key or you\'re a liar');
 		}
 		else {
 			foreach ($this->search($result, 'typeID') as $item) {

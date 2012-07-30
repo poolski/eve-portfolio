@@ -11,7 +11,8 @@ class Character_model extends CI_Model {
 	private function getApiDetails($characterID) {
 		$query = $this->db->get_where('characters',array('characterID'=>$characterID));
 		if($query->num_rows() > 0) {
-			return $query->result_array()[0];
+			$result = $query->result_array();
+			return $result[0];
 		}
 		else {
 			return false;
@@ -29,7 +30,13 @@ class Character_model extends CI_Model {
 		$api = $this->getApiDetails($characterID);
 		if($api) {
 			$args = array("keyID"=>$api['userid'],"vCode"=>$api['vcode'],"characterID"=>$characterID);
-			return $this->api->call("eveapi","char","AssetList",$args);
+			$result = $this->api->call("eveapi","char","AssetList",$args);
+			if(!array_key_exists('error', $result)) {
+				return $result;
+			}
+			else {
+				return false;
+			}
 		}
 		else {
 			return false;

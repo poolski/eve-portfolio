@@ -36,7 +36,14 @@ class API {
 				$ret.= fgets($fp, 128);
 			}
 			fclose($fp);
-			return $this->process("eveapi",$ret);
+			$result = $this->process("eveapi",$ret);
+			if(array_key_exists('error', $result)) {
+				$data['error'] = $result['error']['value'];
+				return $data;
+			}
+			else {
+				return $result;
+			}
 		}
 	}
 

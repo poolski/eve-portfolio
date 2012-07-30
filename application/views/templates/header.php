@@ -13,23 +13,11 @@
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="brand" href="<?php echo base_url();?>">EVE-Portfolio</a>
-        <?php if($this->session->userdata('validated')) {?>
-        <ul class="nav pull-right">
-          <div class="btn-group">
-            <a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
-              <i class="icon-user icon-white"></i>
-              <?php echo($this->session->userdata('username'));?> - Manage
-              <b class="icon-chevron-down icon-white"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li><a href="<?php echo base_url();?>account">My Characters</a></li>
-              <li><a href="<?php echo base_url();?>add">Add a character</a></li>
-              <li><di</li>
-              <li><a href="<?php echo base_url();?>account/logout">Log out</a></li>
-            </ul>
-          </div>
-          <?php }?>
-        </ul>
+        <!--Load the logged in header if the user is authenticated -->
+        <?php 
+          if($this->session->userdata('validated') && isset($characters)) { $this->view('templates/logged_in_header',$characters); } 
+          else { $this->view('templates/logged_in_header'); }
+        ?>
       </div>
     </div>
   </div>
@@ -50,5 +38,4 @@
           <a class="close" data-dismiss="alert">x</a>'.$msg.'</div>');?>
         </div>
       </div>
-      <?php } ?>
-		
+      <?php }?>
