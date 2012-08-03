@@ -32,6 +32,7 @@ class Character_model extends CI_Model {
 			$args = array("keyID"=>$api['userid'],"vCode"=>$api['vcode'],"characterID"=>$characterID);
 			$result = $this->api->call("eveapi","char","AssetList",$args);
 			if(!array_key_exists('error', $result)) {
+				$result = $this->api->search($result,'typeID');
 				return $result;
 			}
 			else {
@@ -43,6 +44,18 @@ class Character_model extends CI_Model {
 		}
 	}
 
+	private function countItems($items) {
+		$result = array();
+		foreach($items as $item) {
+			if(array_key_exists($item['typeID'], $result)) {
+				$result[$item['typeID']][0]['typeID']['quantity'] += $item['quantity'];
+			}
+			// Alternatively, add the item to $result['typeID'][1]...[n] and create a stack that can be parsed later
+			else {
+				$result[$item['typeID']] = $item;
+			}
+		}
+	}
 	public function characterSheet($characterID) {
 		$args = array("keyID"=>$this->keyID,"vCode"=>$this->vCode,"characterID"=>$characterID);
 		$result = $this->api->call("eveapi","char","CharacterSheet",$args);

@@ -30,7 +30,7 @@ class Character extends CI_Controller {
 				$this->index('That character either doesn\'t belong to this API key or you\'re a liar');
 			}
 			else {
-				foreach ($this->search($result, 'typeID') as $item) {
+				foreach ($result as $item) {
 		            $items[] = $this->market_model->getItemName($item['typeID']);
 		        }
 				//$data['characters'] = $this->account_model->characters();
