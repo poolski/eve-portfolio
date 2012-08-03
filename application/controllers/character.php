@@ -50,16 +50,19 @@ class Character extends CI_Controller {
 		}
 		$data['title'] = $this->character_model->characterName($characterID)."'s assets";
 		$items = array();
+		$itemsWithCounts = array();
 		$result = $this->character_model->listAssets($characterID);
 		if(!$result) {
 			$this->index('That character either doesn\'t belong to this API key or you\'re a liar');
 		}
 		else {
 			foreach ($this->search($result, 'typeID') as $item) {
-	            $items[] = $this->market_model->getItemName($item['typeID']);
+	            $items[] = $item;
 	        }
+	        $itemsWithCounts = $this->character_model->stack($items);
+	        //var_dump($itemsWithCounts);
 			//$data['characters'] = $this->account_model->characters();
-			$data['assets'] = $items;
+			$data['assets'] = $itemsWithCounts;
 			$this->load->view('templates/header',$data);
 			$this->load->view('character/assets',$data);
 			$this->load->view('templates/footer');

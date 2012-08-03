@@ -48,31 +48,34 @@ class Character_model extends CI_Model {
 	 * Create 'stacks' of items as associative arrays based on typeID, combining multiple
 	 * items of the same type into a single group, while still remaining individual.
 	 */ 
-	private function stack($items) {
+	public function stack($items) {
 		$result = array();
+		$out = array();
 		foreach($items as $item) {
 			if(array_key_exists($item['typeID'], $result)) {
 				$result[$item['typeID']][] = $item;
 			}
 			else {
-				$result[$item['typeID']] = $item;
+				$result[$item['typeID']][] = $item;
 			}
 		}
-		return $result;
+		foreach($result as $typeID => $item) {
+			$item['total'] = (int)$this->stackTotal($item);
+			$out[] = $item;
+		}
+		return $out;
 	}
 
 	private function stackTotal($stack) {
 		$count = 0;
-		foreach($stack as $items) {
-			// If there is just one stack of items
-			if(count($items) == 1) {
-				$count = $items[0]['quantity'];
+		$size = count($stack);
+		if($size > 2) {
+			foreach($stack as $item) {
+				$count += $item['quantity'];
 			}
-			else if(count($items) > 1) {
-				foreach($items as $item) {
-					$count += $item['quantity'];
-				}
-			}
+		}
+		else {
+			$count = $stack[0]['quantity'];
 		}
 		return $count;
 	}
