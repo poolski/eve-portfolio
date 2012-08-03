@@ -44,17 +44,37 @@ class Character_model extends CI_Model {
 		}
 	}
 
-	private function countItems($items) {
+	/* 
+	 * Create 'stacks' of items as associative arrays based on typeID, combining multiple
+	 * items of the same type into a single group, while still remaining individual.
+	 */ 
+	private function stack($items) {
 		$result = array();
 		foreach($items as $item) {
 			if(array_key_exists($item['typeID'], $result)) {
-				$result[$item['typeID']][0]['typeID']['quantity'] += $item['quantity'];
+				$result[$item['typeID']][] = $item;
 			}
-			// Alternatively, add the item to $result['typeID'][1]...[n] and create a stack that can be parsed later
 			else {
 				$result[$item['typeID']] = $item;
 			}
 		}
+		return $result;
+	}
+
+	private function stackTotal($stack) {
+		$count = 0;
+		foreach($stack as $items) {
+			// If there is just one stack of items
+			if(count($items) == 1) {
+				$count = $items[0]['quantity'];
+			}
+			else if(count($items) > 1) {
+				foreach($items as $item) {
+					$count += $item['quantity'];
+				}
+			}
+		}
+		return $count;
 	}
 	public function characterSheet($characterID) {
 		$args = array("keyID"=>$this->keyID,"vCode"=>$this->vCode,"characterID"=>$characterID);
