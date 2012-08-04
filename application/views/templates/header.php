@@ -26,7 +26,6 @@
       </div>
     </div>
   </div>
-
 	<div class="container">
     <?php //echo set_breadcrumb(); ?>
     <!-- Masthead
