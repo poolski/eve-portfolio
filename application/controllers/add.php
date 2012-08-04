@@ -20,7 +20,7 @@ class Add extends CI_Controller {
 			$this->load->view('templates/footer');
 		}
     }
-
+    // Used when you click the "try different API key link"
     public function new_api() {
     	$this->session->set_userdata('userid',NULL);
     	$this->session->set_userdata('vcode',NULL);
