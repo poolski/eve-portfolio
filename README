@@ -1,1 +1,10 @@
 The beginnings of an app to track investments and stuff in EVE Online. A Terrible Internet Spaceship Game. 
+
+==Installation==
+
+# Clone this repository to a directory of your choosing that is readable by your web server, preferably on a local development box. 
+# Create a new database on your MySQL server (you can probably use PostgreSQL/MSSQL/whatever, but it'll take tinkering) and call it something inventive.
+# Change application/config/database.php to your own DB server
+# Import the dbstructure.sql file into your DB. ***IT IS NOT COMPLETE BY ANY MEANS BUT IT WORKS RIGHT NOW***
+# Create a user in the users table and plug in an MD5 hash of your chosen password. Yes you have to do it by hand because I'm fucking lazy, ok? I'll add the registration code soon.
+# If all went well, when you browse to http://wherever/eve-portfolio/ you'll get a login page.
