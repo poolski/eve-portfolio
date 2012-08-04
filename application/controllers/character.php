@@ -31,6 +31,7 @@ class Character extends CI_Controller {
 				$this->index('That character either doesn\'t belong to this API key or you\'re a liar');
 			}
 			else {
+				var_dump($result);
 				$data['assets'] = $result;
 				$data['attribs'] = $attribs;
 				$data['title'] = $this->character_model->characterName($characterID);

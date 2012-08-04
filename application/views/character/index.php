@@ -16,7 +16,7 @@
     </div>
     <div class="tab-pane" id="tab2">
       <blockquote>
-        <p>Please note that only assets in Jita 4-4 Caldari Navy Assembly Plant <strong>in your item hangar</strong> will be displayed.</p>
+        <p>Please note that only assets in Jita 4-4 Caldari Navy Assembly Plant <strong><a href="#" rel="tooltip" title="As in: IN YOUR HANGAR AND NOT IN A CONTAINER">in your item hangar</a></strong> will be displayed.</p>
         <p>Also, any items in giant secure containers and hangars will not be shown.</p>
         <small>Functionality to do this will be added later</small>
       </blockquote>
