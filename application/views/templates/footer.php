@@ -5,4 +5,5 @@
 </body>
 <script src="<?php echo base_url();?>static/js/jquery.js"/></script>
 <script src="<?php echo base_url();?>static/js/bootstrap.js"/></script>
+<script src="<?php echo base_url();?>static/js/prettify.js"/></script>
 </html>

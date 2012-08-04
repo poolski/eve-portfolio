@@ -6,9 +6,10 @@
 	echo(link_tag('static/css/bootstrap.css')); 
   echo(link_tag('static/css/default.css')); 
 	echo(link_tag('static/css/bootstrap-responsive.css')); 
+  echo(link_tag('static/css/prettify.css'));
 	?>
 </head>
-<body>
+<body onload="prettyPrint()">
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
