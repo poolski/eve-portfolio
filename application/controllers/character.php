@@ -31,13 +31,7 @@ class Character extends CI_Controller {
 				$this->index('That character either doesn\'t belong to this API key or you\'re a liar');
 			}
 			else {
-				foreach ($result as $item) {
-	            	$items[] = $item;
-		        }
-		        $itemsWithCounts = $this->character_model->stack($items);
-		        //var_dump($itemsWithCounts);
-				//$data['characters'] = $this->account_model->characters();
-				$data['assets'] = $itemsWithCounts;
+				$data['assets'] = $result;
 				$data['attribs'] = $attribs;
 				$data['title'] = $this->character_model->characterName($characterID);
 				$this->load->view('templates/header',$data);
@@ -47,6 +41,8 @@ class Character extends CI_Controller {
 		}
 	}
 
+	// This function is used for testing shit. It doesn't get called in regular use. It's called in 
+	// /character/assets/xxxxxxxxx and nowhere else. 
 	public function assets($characterID = NULL) {
 		if(!$characterID) {
 			$this->index('Quit being a douche and hacking other peoples\' characters, you faggot');
