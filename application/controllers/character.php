@@ -32,14 +32,12 @@ class Character extends CI_Controller {
 			}
 			else {
 				foreach ($result as $item) {
-		            $items[] = $item;
+	            	$items[] = $item;
 		        }
-				foreach ($items as $typeID => $item) {
-		            $item['name'] = $this->market_model->getItemName($item['typeID']);
-		        }
-		        $itemsWithCounts = $this->character_model->stack($result);
+		        $itemsWithCounts = $this->character_model->stack($items);
+		        //var_dump($itemsWithCounts);
 				//$data['characters'] = $this->account_model->characters();
-				$data['assets'] = $items;
+				$data['assets'] = $itemsWithCounts;
 				$data['attribs'] = $attribs;
 				$data['title'] = $this->character_model->characterName($characterID);
 				$this->load->view('templates/header',$data);
@@ -72,5 +70,9 @@ class Character extends CI_Controller {
 			$this->load->view('character/assets',$data);
 			$this->load->view('templates/footer');
 		}
+	}
+
+	private function filterByLocation($assets, $location = 60003760) {
+
 	}
 }

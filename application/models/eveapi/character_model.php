@@ -19,6 +19,7 @@ class Character_model extends CI_Model {
 			return false;
 		}
 	}
+
 	// This one needs to be made more flexible so it pulls API details first from session (for initial adds)
 	// and then from DB for standard listing. 
 	public function accountBalance($characterID) {
@@ -26,15 +27,21 @@ class Character_model extends CI_Model {
 		$ret = $this->api->call("eveapi","char","AccountBalance",$args);
 		return $ret['result']['rowset']['value']['row'];
 	}
-
-	public function listAssets($characterID) {
+	// List assets ONLY IN JITA
+	public function listAssets($characterID, $location = 60003760) {
 		$api = $this->getApiDetails($characterID);
 		if($api) {
 			$args = array("keyID"=>$api['userid'],"vCode"=>$api['vcode'],"characterID"=>$characterID);
 			$result = $this->api->call("eveapi","char","AssetList",$args);
+			$out = array();
 			if(!array_key_exists('error', $result)) {
 				$result = $this->api->search($result,'typeID');
-				return $result;
+				foreach($result as $item) {
+					if(@$item['locationID'] == $location) {
+						$out[] = $item;
+					}
+				}
+				return $out;
 			}
 			else {
 				return false;
@@ -81,6 +88,7 @@ class Character_model extends CI_Model {
 		}
 		return $count;
 	}
+
 	public function characterSheet($characterID) {
 		$args = array("keyID"=>$this->keyID,"vCode"=>$this->vCode,"characterID"=>$characterID);
 		$result = $this->api->call("eveapi","char","CharacterSheet",$args);
