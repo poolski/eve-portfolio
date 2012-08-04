@@ -24,7 +24,7 @@
 	  	</thead>
 	  	<tbody>
 		<?php foreach ($assets as $item): ?>
-	    	<tr><?php echo("<td>".$item[0]['typeID']."</td><td>".$item[0]['itemName']."</td>");?></tr>
+	    	<tr><?php echo("<td>".$item['typeID']."</td><td>".$item['itemName']."</td>");?></tr>
 		<?php endforeach ?>
 		</tbody>
 	</table>

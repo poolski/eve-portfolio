@@ -5,6 +5,7 @@ class Character_model extends CI_Model {
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('api');
+		$this->load->model('evecentral/market_model');
 		
 		# TODO: load keyID and vCode from user session/DB
 	}
@@ -60,6 +61,7 @@ class Character_model extends CI_Model {
 			}
 		}
 		foreach($result as $typeID => $item) {
+			$item['name'] = $this->market_model->getItemName($typeID);
 			$item['total'] = (int)$this->stackTotal($item);
 			$out[] = $item;
 		}
@@ -71,7 +73,7 @@ class Character_model extends CI_Model {
 		$size = count($stack);
 		if($size > 2) {
 			foreach($stack as $item) {
-				$count += $item['quantity'];
+				@$count += $item['quantity'];
 			}
 		}
 		else {

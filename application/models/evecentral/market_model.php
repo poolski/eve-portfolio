@@ -6,8 +6,9 @@ public function __construct() {
 }
 
 function getItemName($itemID) {
-	$query = $this->db->get_where('items',array("typeID"=>$itemID));
-	return $query->result_array();
+	$query = $this->db->get_where('typeIDs',array("typeID"=>$itemID));
+	$result = $query->result_array();
+	return $result[0]['itemName'];
 }
 
 function getItemPrices($itemID) {
