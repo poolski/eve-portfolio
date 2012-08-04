@@ -16,8 +16,12 @@
 				<a class="brand" href="<?php echo base_url();?>">EVE-Portfolio</a>
         <!--Load the logged in header if the user is authenticated -->
         <?php 
-          if($this->session->userdata('validated') && isset($characters)) { $this->view('templates/logged_in_header',$characters); } 
-          else { $this->view('templates/logged_in_header'); }
+          if($this->session->userdata('validated')) { 
+            $this->view('templates/logged_in_header'); 
+            if($this->session->userdata('type') == "admin") {
+              $this->view('templates/admin_header');
+            }
+          }
         ?>
       </div>
     </div>
