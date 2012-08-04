@@ -56,7 +56,7 @@ if (defined('ENVIRONMENT'))
  * as this file.
  *
  */
-	$system_path = '/home/kyrill/programming/eve-portfolio/system';
+	$system_path = '/path/to/your/app/system';
 
 /*
  *---------------------------------------------------------------
@@ -72,7 +72,7 @@ if (defined('ENVIRONMENT'))
  * NO TRAILING SLASH!
  *
  */
-	$application_folder = '/home/kyrill/programming/eve-portfolio/application';
+	$application_folder = '/path/to/your/app/application';
 
 /*
  * --------------------------------------------------------------------
