@@ -1,12 +1,9 @@
 <?php 
 class Character_model extends CI_Model {
-	var $keyID = "210429";
-	var $vCode = "TwEwWA3j9EBaTgPSI5PynHp7jP2LGUGWROsUYCbOfXlXzfTFE14vmJ8fbY0vCTmw";
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('api');
 		$this->load->model('eveapi/item_model');
-		
 		# TODO: load keyID and vCode from user session/DB
 	}
 	private function getApiDetails($characterID) {
@@ -23,9 +20,22 @@ class Character_model extends CI_Model {
 	// This one needs to be made more flexible so it pulls API details first from session (for initial adds)
 	// and then from DB for standard listing. 
 	public function accountBalance($characterID) {
-		$args = array("keyID"=>$this->keyID,"vCode"=>$this->vCode,"characterID"=>$characterID);
-		$ret = $this->api->call("eveapi","char","AccountBalance",$args);
-		return $ret['result']['rowset']['value']['row'];
+		$api = $this->getApiDetails($characterID);
+		if($api) {
+			$args = array("keyID"=>$api['userid'],"vCode"=>$api['vcode'],"characterID"=>$characterID);
+			$ret = $this->api->call("eveapi","char","AccountBalance",$args);
+			return $ret['result']['rowset']['value']['row'];
+		}
+		else if($this->session->userdata('userid') && $this->session->userdata('vcode')) {
+			$userid = $this->session->userdata('userid');
+			$vcode = $this->session->userdata('vcode');
+			$args = array("keyID"=>$userid,"vCode"=>$vcode,"characterID"=>$characterID);
+			$ret = $this->api->call("eveapi","char","AccountBalance",$args);
+			return $ret['result']['rowset']['value']['row'];
+		}
+		else {
+			return false;
+		}
 	}
 	// List assets ONLY IN JITA
 	public function listAssets($characterID, $location = 60003760) {
@@ -42,7 +52,8 @@ class Character_model extends CI_Model {
 						$items[] = $item;
 					}
 					else {
-						$items[] = $item;
+						//For debugging, I'm leaving the override in for now
+						//$items[] = $item;
 					}
 				}
 				$out = $this->stack($items);
@@ -95,29 +106,48 @@ class Character_model extends CI_Model {
 	}
 
 	public function characterSheet($characterID) {
-		$args = array("keyID"=>$this->keyID,"vCode"=>$this->vCode,"characterID"=>$characterID);
-		$result = $this->api->call("eveapi","char","CharacterSheet",$args);
+		$api = $this->getApiDetails($characterID);
+		if($api) {
+			$args = array("keyID"=>$api['userid'],"vCode"=>$api['vcode'],"characterID"=>$characterID);
+			$result = $this->api->call("eveapi","char","CharacterSheet",$args);
+		}
+		else if($this->session->userdata('userid') && $this->session->userdata('vcode')) {
+			$userid = $this->session->userdata('userid');
+			$vcode = $this->session->userdata('vcode');
+			$args = array("keyID"=>$userid,"vCode"=>$vcode,"characterID"=>$characterID);
+			$result = $this->api->call("eveapi","char","CharacterSheet",$args);
+		}
 		if($result) {
 			if(!array_key_exists('error', $result)) {
-					return $result;
-				}
-				else {
-					return false;
-				}
+				return $result;
 			}
+			else {
+				return false;
+			}
+		}
 		else {
 			return false;
 		}
 	}
 
 	public function characterName($characterID) {
+		//See if we have this fucker in the DB already
 		$charData = $this->getApiDetails($characterID);
 		if($charData) {
 			return $charData['name'];
 		}
 		else {
-			$result = $this->character_model->characterSheet($characterID);
+			$result = $this->characterSheet($characterID);
 			return $result['result']['name'];
+		}
+	}
+
+	public function marketOrders($characterID) {
+		$api = $this->getApiDetails($characterID);
+		if($api) {
+			$args = array("keyID"=>$api['userid'],"vCode"=>$api['vcode'],"characterID"=>$characterID);
+			$result = $this->api->call("eveapi","char","MarketOrders",$args);
+			return $result;
 		}
 	}
 }
