@@ -48,9 +48,7 @@ class Account extends CI_Controller {
 		$characters = array();
 		foreach($result as $char) {
 			if(is_array($char) && array_key_exists('name', $char)) {
-				$balance = $this->character_model->accountBalance($char['characterID']);
-				$characters[] = array("name" => $char['name'],"characterID" => $char['characterID'],
-					"balance" => number_format($balance['attributes']['balance']));
+				$characters[] = array("name" => $char['name'],"characterID" => $char['characterID']);
 			}
 		}
 		$data['characters'] = $characters;
