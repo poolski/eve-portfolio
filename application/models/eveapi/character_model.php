@@ -5,7 +5,7 @@ class Character_model extends CI_Model {
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('api');
-		$this->load->model('evecentral/market_model');
+		$this->load->model('eveapi/item_model');
 		
 		# TODO: load keyID and vCode from user session/DB
 	}
@@ -33,14 +33,19 @@ class Character_model extends CI_Model {
 		if($api) {
 			$args = array("keyID"=>$api['userid'],"vCode"=>$api['vcode'],"characterID"=>$characterID);
 			$result = $this->api->call("eveapi","char","AssetList",$args);
+			$items = array();
 			$out = array();
 			if(!array_key_exists('error', $result)) {
 				$result = $this->api->search($result,'typeID');
 				foreach($result as $item) {
 					if(@$item['locationID'] == $location) {
-						$out[] = $item;
+						$items[] = $item;
+					}
+					else {
+						$items[] = $item;
 					}
 				}
+				$out = $this->stack($items);
 				return $out;
 			}
 			else {
@@ -68,7 +73,7 @@ class Character_model extends CI_Model {
 			}
 		}
 		foreach($result as $typeID => $item) {
-			$item['name'] = $this->market_model->getItemName($typeID);
+			$item['name'] = $this->item_model->getItemName($typeID);
 			$item['total'] = (int)$this->stackTotal($item);
 			$out[] = $item;
 		}
