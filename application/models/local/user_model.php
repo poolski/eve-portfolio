@@ -8,7 +8,7 @@ class User_model extends CI_Model {
 
 	function register() {
 		$data['username'] = $this->security->xss_clean($this->input->post('username'));
-		$data['password'] = $this->security->xss_clean($this->input->post('password'));
+		$data['pw'] = MD5($this->security->xss_clean($this->input->post('password')));
 		$data['email'] = $this->security->xss_clean($this->input->post('email'));
 
 		// Does this email already exist?
