@@ -19,6 +19,7 @@ class Account extends CI_Controller {
     }
  
     public function process(){
+    	$this->login_model->check_isvalidated();
         // Load the model
         $this->load->model('local/login_model');
         // Validate the user can login
@@ -59,5 +60,23 @@ class Account extends CI_Controller {
 	public function logout() {
         $this->session->sess_destroy();
         redirect(base_url().'account/login');
+    }
+    public function register($msg = NULL,$alert_class = NULL) {
+    	// Load our view to be displayed
+        // to the user
+        $data['loginmsg'] = $msg;
+        $data['alert_class'] = $alert_class;
+  		$this->load->view('templates/header',$data);
+        $this->load->view('auth/register_view', $data);
+        $this->load->view('templates/footer');
     }    
+    public function do_register() {
+    	$result = $this->user_model->register();
+    	if($result) {
+    		$this->index("Congratulations, you registered. You are a wonderful snowflake.");
+    	}
+    	else {
+    		$this->register("Yeah, something broke. Probably whatever you typed was horrible and stupid");
+    	}
+    }
 }

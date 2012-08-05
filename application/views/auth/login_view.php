@@ -10,7 +10,7 @@
       </div>
     <?php } ?>
   	<div id="login_form">
-        <form action="<?php echo base_url();?>login/process" method="post" name="process">
+        <form action="<?php echo base_url();?>account/process" method="post" name="process">
             <input placeholder="Your username" type="text" name='username' id='username'/><br />
             <input placeholder="Your password" type="password" name="password" id='password'/><br />
             <button class="btn-large btn" type="Submit" value="Login">Butan</button>

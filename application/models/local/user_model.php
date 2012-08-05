@@ -7,17 +7,50 @@ class User_model extends CI_Model {
 	}
 
 	function register() {
-		$data['username'] = $this->input->post('username');
-		$data['password'] = $this->input->post('password');
-		$data['email'] = $this->input->post('mail');
+		$data['username'] = $this->security->xss_clean($this->input->post('username'));
+		$data['password'] = $this->security->xss_clean($this->input->post('password'));
+		$data['email'] = $this->security->xss_clean($this->input->post('email'));
+
+		// Does this email already exist?
+		$mailExists = $this->getUserByEmail($data['email']);
+		// Does this username already exist
+		$nameExists = $this->getUserByUsername($data['username']);
+
+		if($mailExists) {
+			return -1;
+		}
+		if($nameExists) {
+			return -2;
+		}
+		else {
+			$this->db->insert('users', $data);
+			if($this->db->_error_message()) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
 	}
 
-	function getUserByEmail($mail) {
-
+	private function getUserByEmail($mail) {
+		$result = $this->db->get_where('users',array('email'=>$email));
+		if($result->num_rows() == 0) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
-	function getUserByUsername($user) {
-
+	private function getUserByUsername($user) {
+		$result = $this->db->get_where('users',array('username'=>$user));
+		if($result->num_rows() == 0) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	function addCharToAccount($data) {
