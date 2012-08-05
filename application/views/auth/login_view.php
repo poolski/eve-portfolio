@@ -16,5 +16,6 @@
             <button class="btn-large btn" type="Submit" value="Login">Butan</button>
         </form>
     </div>
+    <a href="<?php echo base_url();?>account/register">Wanna register?</a>
     </p>
 </div>
