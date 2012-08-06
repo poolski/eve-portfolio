@@ -5,7 +5,7 @@
 	<title><?php if(isset($title)) { echo $title; }?></title>
 	<?php 
 	echo(link_tag('static/css/bootstrap.css')); 
-  echo(link_tag('static/css/default.css')); 
+  //echo(link_tag('static/css/default.css')); 
 	echo(link_tag('static/css/bootstrap-responsive.css')); 
   echo(link_tag('static/css/prettify.css'));
 	?>
@@ -34,9 +34,6 @@
     </div>
   </div>
 	<div class="container">
-    <?php //echo set_breadcrumb(); ?>
-    <!-- Masthead
-      ================================================== -->
       <?php if(isset($title)) { ?>
       <header class="jumbotron subhead" id="overview">
         <h1><?php echo $title; ?></h1>        
