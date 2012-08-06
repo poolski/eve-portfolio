@@ -11,8 +11,7 @@ class Login extends CI_Controller{
     public function index($msg = NULL,$alert_class = NULL){
         // Load our view to be displayed
         // to the user
-        $data['msg'] = $msg;
-        $data['title'] = "Please login";
+        $data['loginmsg'] = $msg;
         $data['alert_class'] = $alert_class;
   		$this->load->view('templates/header',$data);
         $this->load->view('auth/login_view', $data);
