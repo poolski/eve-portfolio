@@ -28,7 +28,7 @@
   echo(link_tag('static/css/bootstrap-responsive.css')); 
   ?>
 </head>
-<body>
+<body onload="prettify()">
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -53,7 +53,7 @@
   </div>
   <div class="container">
     <?php if(isset($title)) { ?>
-    <h1><?php echo $title; ?></h1>        
+    <div class="page-header"><h1><?php echo $title; ?></h1></div>
     <?php } 
     if(isset($msg)) { ?>
     <div class="row">
