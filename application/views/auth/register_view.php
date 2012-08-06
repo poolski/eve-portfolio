@@ -12,11 +12,10 @@
       </div>
     <?php } ?>
   	<div id="login_form">
-        <form action="<?php echo base_url();?>account/do_register" method="post" name="process">
-            <input placeholder="Your username" type="text" name='username' id='username'/>
+        <form action="<?php echo base_url();?>account/do_register" method="post" name="do_register">
+            <input placeholder="Your username" type="text" name='username'/><br> 
             <input placeholder="you@example.com" type="email" name="email" id='email'/><br />
-            <input placeholder="Your password" type="password" name="password" id='password'/>
-            <input placeholder="Your password. Again." type="password" name="password2" id='password2'/><br />
+            <input placeholder="Your password" type="password" name="password" id='password'/><br />
             <button class="btn-large btn" type="Submit" value="Login">Butan</button>
         </form>
     </div>
