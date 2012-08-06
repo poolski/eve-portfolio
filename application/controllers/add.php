@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Add extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
@@ -6,6 +6,7 @@ class Add extends CI_Controller {
 		$this->load->model('eveapi/account_model');
 		$this->load->model('eveapi/character_model');
 		$this->load->model('local/user_model');
+		$this->login_model->check_isvalidated();
 	}
 	public function index($msg = NULL,$alert_class = NULL) {
 		$data['msg'] = $msg;

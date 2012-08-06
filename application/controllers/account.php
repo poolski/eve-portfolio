@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Account extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
@@ -19,7 +19,6 @@ class Account extends CI_Controller {
     }
  
     public function process(){
-    	$this->login_model->check_isvalidated();
         // Load the model
         $this->load->model('local/login_model');
         // Validate the user can login

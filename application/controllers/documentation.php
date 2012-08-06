@@ -1,7 +1,8 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Documentation extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
+		$this->login_model->check_isvalidated();
 	}
 
 	public function index() {

@@ -1,4 +1,4 @@
-<?php 
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Character extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
@@ -8,6 +8,7 @@ class Character extends CI_Controller {
 		$this->load->model('local/login_model');
 		$this->login_model->check_isvalidated();
 	}
+	
 	public function index($msg = NULL) {
 		if($msg) {
 			$this->session->set_flashdata('msg',$msg);

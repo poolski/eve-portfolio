@@ -34,7 +34,7 @@ class User_model extends CI_Model {
 	}
 
 	private function getUserByEmail($mail) {
-		$result = $this->db->get_where('users',array('email'=>$email));
+		$result = $this->db->get_where('users',array('email'=>$mail));
 		if($result->num_rows() == 0) {
 			return false;
 		}
