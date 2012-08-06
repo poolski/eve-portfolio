@@ -6,6 +6,7 @@ class Add extends CI_Controller {
 		$this->load->model('eveapi/account_model');
 		$this->load->model('eveapi/character_model');
 		$this->load->model('local/user_model');
+		$this->load->model('local/login_model');
 		$this->login_model->check_isvalidated();
 	}
 	public function index($msg = NULL,$alert_class = NULL) {

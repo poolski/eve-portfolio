@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><?php if(isset($title)) { echo $title; }?></title>
 	<?php 
 	echo(link_tag('static/css/bootstrap.css')); 
@@ -13,6 +14,12 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
+        <!-- Button that shows up once the navbar collapses -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
 				<a class="brand" href="<?php echo base_url();?>">EVE-Portfolio</a>
         <!--Load the logged in header if the user is authenticated -->
         <?php 
