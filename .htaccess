@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteCond $1 !^(index\.php|images|static|robots\.txt|css|js)
+RewriteRule ^(.*)$ /~kyrill/eve-portfolio/index.php/$1 [L]
+

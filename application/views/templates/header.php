@@ -23,7 +23,7 @@
   p {
     margin: 12px 15px 12px 15px;
   }
-  </style>
+  </style>  
   <?php
   echo(link_tag('static/css/bootstrap-responsive.css')); 
   ?>
