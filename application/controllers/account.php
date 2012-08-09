@@ -45,15 +45,21 @@ class Account extends CI_Controller {
 		}
 		$data['alert_class'] = "alert-notice";
 		$result = $this->user_model->listAccountCharacters();
-		$characters = array();
-		foreach($result as $char) {
-			if(is_array($char) && array_key_exists('name', $char)) {
-				$characters[] = array("name" => $char['name'],"characterID" => $char['characterID']);
-			}
-		}
-		$data['characters'] = $characters;
-		$this->load->view('templates/header',$data);
-		$this->load->view('account/list_registered_characters',$data);
+        $this->load->view('templates/header',$data);
+        if($result) {
+    		$characters = array();
+    		foreach($result as $char) {
+    			if(is_array($char) && array_key_exists('name', $char)) {
+    				$characters[] = array("name" => $char['name'],"characterID" => $char['characterID']);
+    			}
+    		}
+    		$data['characters'] = $characters;
+    		$this->load->view('account/list_registered_characters',$data);
+        }
+        else {
+            $data['msg'] = 'You have no characters on this account. Click <a href="'.base_url().'add">here</a> to add one.';
+            $this->load->view('common/error',$data);
+        }
 		$this->load->view('templates/footer');
 	}
 	public function logout() {
