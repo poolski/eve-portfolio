@@ -29,6 +29,7 @@ class Character extends CI_Controller {
 			$result = $this->character_model->listAssets($characterID);
 			$attribs = $this->character_model->characterSheet($characterID);
 			$marketOrders = $this->character_model->marketOrders($characterID);
+			$portraitURL = $this->character_model->characterPortraitURL($characterID);
 			if(!$result) {
 				$this->index('That character either doesn\'t belong to this API key or you\'re a liar');
 			}
@@ -36,6 +37,7 @@ class Character extends CI_Controller {
 				$data['assets'] = $result;
 				$data['attribs'] = $attribs;
 				$data['marketOrders'] = $marketOrders;
+				$data['portraitURL'] = $portraitURL;
 				$data['title'] = $this->character_model->characterName($characterID);
 				$this->load->view('templates/header',$data);
 				$this->load->view('character/index',$data);

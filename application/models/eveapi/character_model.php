@@ -45,6 +45,7 @@ class Character_model extends CI_Model {
 			$result = $this->api->call("eveapi","char","AssetList",$args);
 			$items = array();
 			$out = array();
+			$allData = array();
 			if(!array_key_exists('error', $result)) {
 				$result = $this->api->search($result,'typeID');
 				foreach($result as $item) {
@@ -68,11 +69,12 @@ class Character_model extends CI_Model {
 		}
 	}
 
+
 	/* 
 	 * Create 'stacks' of items as associative arrays based on typeID, combining multiple
 	 * items of the same type into a single group, while still remaining individual.
 	 */ 
-	public function stack($items) {
+	private function stack($items) {
 		$result = array();
 		$out = array();
 		foreach($items as $item) {
@@ -86,7 +88,7 @@ class Character_model extends CI_Model {
 		foreach($result as $typeID => $item) {
 			$item['name'] = $this->item_model->getItemName($typeID);
 			$item['total'] = (int)$this->stackTotal($item);
-			$out[] = $item;
+			$out[$typeID] = $item;
 		}
 		return $out;
 	}
@@ -148,6 +150,17 @@ class Character_model extends CI_Model {
 			$args = array("keyID"=>$api['userid'],"vCode"=>$api['vcode'],"characterID"=>$characterID);
 			$result = $this->api->call("eveapi","char","MarketOrders",$args);
 			return $result;
+		}
+	}
+
+	public function characterPortraitURL($characterID) {
+		$api = $this->getApiDetails($characterID);
+		if($api) {
+			$result = "http://image.eveonline.com/character/".$characterID;
+			return $result;
+		}
+		else {
+			return false;
 		}
 	}
 }

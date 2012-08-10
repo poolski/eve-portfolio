@@ -2,6 +2,7 @@
 class Documentation extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('local/login_model');
 		$this->login_model->check_isvalidated();
 	}
 
