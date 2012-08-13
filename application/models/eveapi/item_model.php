@@ -33,7 +33,7 @@ class Item_model extends CI_Model {
 			$buy = $item -> buy -> max;
 			$sell = $item -> sell -> min;
 			$margin = round(100-(float)$buy/(float)$sell*100,2);
-			$prices[] = array("typeID" => (int)$id, "buy" => number_format((float)$buy,2),"sell" => number_format((float)$sell,2), "margin" => $margin);
+			$prices[] = array("buy" => number_format((float)$buy,2),"sell" => number_format((float)$sell,2), "margin" => $margin);
 		}
 		return $prices;
 	}
