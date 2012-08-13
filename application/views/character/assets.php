@@ -5,19 +5,19 @@
 </blockquote>
 <div class="accordion" id="accordion0">
 <?php $i = 0; $n = 0; foreach($assets as $stack) { 
-  if(count($stack) == 3) { ?>
+  if(count($stack) == 4) { ?>
     <div class="accordion-group">
       <div class="accordion-heading">
         <span class="accordion-toggle" href="#">
           <?php echo($stack['name']." x ".$stack['total']);?>
-          <div class="pull-right"><small>B: 00.00, S: 00.00, %: 00.00</small></div>
+          <div class="pull-right"><small><?php echo("B: ".$stack['prices'][0]['buy'].", S:".$stack['prices'][0]['sell'].", M: ".$stack['prices'][0]['margin']."%");?></small></div>
         </span>
       </div>
       <div class="accordion-body in">
       </div>
       </div><?php
   }
-  else if(count($stack) > 3) { ?>
+  else if(count($stack) > 4) { ?>
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse<?php echo($n);?>">

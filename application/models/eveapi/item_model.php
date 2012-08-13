@@ -14,14 +14,21 @@ class Item_model extends CI_Model {
 	function getItemPrices($itemID) {
 		$results = array();
 		$ids = '';
-		if(count($itemID) > 1) {
-			foreach ($itemID as $item) {
-				$ids .= "&typeid=".$item;
+		//Handle both array and non-array inputs. Jesus fuck USE ARRAYS.
+		if(is_array($itemID)) {
+			if(count($itemID) > 1) {
+				foreach ($itemID as $item) {
+					$ids .= "&typeid=".$item;
+				}
+			}
+			else {
+				$ids = "typeid=".$itemID[0];
 			}
 		}
 		else {
-			$ids = "typeid=".$itemID[0];
+			$ids = "typeid=".$itemID;
 		}
+
 		$request = $ids . "&usesystem=30000142";
 		$results = $this->api->call("ecapi",null,"marketstat",$request);
 		$xml = simplexml_load_string($results);

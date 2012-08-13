@@ -69,7 +69,6 @@ class Character_model extends CI_Model {
 		}
 	}
 
-
 	/* 
 	 * Create 'stacks' of items as associative arrays based on typeID, combining multiple
 	 * items of the same type into a single group, while still remaining individual.
@@ -88,6 +87,7 @@ class Character_model extends CI_Model {
 		foreach($result as $typeID => $item) {
 			$item['name'] = $this->item_model->getItemName($typeID);
 			$item['total'] = (int)$this->stackTotal($item);
+			$item['prices'] = $this->item_model->getItemPrices(array($typeID));
 			$out[$typeID] = $item;
 		}
 		return $out;

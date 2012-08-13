@@ -26,15 +26,15 @@ class Character extends CI_Controller {
 		else {
 			$items = array();
 			$itemsWithCounts = array();
-			$result = $this->character_model->listAssets($characterID);
+			$assets = $this->character_model->listAssets($characterID);
 			$attribs = $this->character_model->characterSheet($characterID);
 			$marketOrders = $this->character_model->marketOrders($characterID);
 			$portraitURL = $this->character_model->characterPortraitURL($characterID);
-			if(!$result) {
+			if(!$assets) {
 				$this->index('That character either doesn\'t belong to this API key or you\'re a liar');
 			}
 			else {
-				$data['assets'] = $result;
+				$data['assets'] = $assets;
 				$data['attribs'] = $attribs;
 				$data['marketOrders'] = $marketOrders;
 				$data['portraitURL'] = $portraitURL;
