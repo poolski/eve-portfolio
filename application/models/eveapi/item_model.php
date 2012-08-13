@@ -38,18 +38,18 @@ class Item_model extends CI_Model {
 	}
 
 	public function checkTimestamp($itemID) {
-		$now = date("Y-m-d H:i:s");
-		$nowTime = strtotime($now);
-		$limitTime = $nowTime - 1800;
-		print_r($nowTime);
-		echo("<br>");
-		print_r($limitTime);
-		//$query = $this->db->get_where('prices',array('typeID' => $itemID));
-		//$result = $query->result_array();
-
+		$sql = "SELECT * FROM prices WHERE `lastSync` > (NOW() - INTERVAL 30 MINUTE) AND `typeID` = $itemID";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0) {
+			$result = $query->result_array();
+			return $result;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private function getPriceFromDB($itemID) {
-		
+
 	}
 }
