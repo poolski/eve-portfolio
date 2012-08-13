@@ -2,6 +2,7 @@
 class Item_model extends CI_Model {
 	public function __construct() {
 		parent::__construct();
+		$this->load->library('api');
 	}
 
 	function getItemName($itemID) {
@@ -22,7 +23,7 @@ class Item_model extends CI_Model {
 			$ids = "typeid=".$itemID[0];
 		}
 		$request = $ids . "&usesystem=30000142";
-		$results = $this->call("marketstat",$request);
+		$results = $this->api->call("ecapi",null,"marketstat",$request);
 		$xml = simplexml_load_string($results);
 		$typeresults = $xml -> marketstat -> type;
 		$prices = array();
@@ -32,7 +33,7 @@ class Item_model extends CI_Model {
 			$buy = $item -> buy -> max;
 			$sell = $item -> sell -> min;
 			$margin = round(100-(float)$buy/(float)$sell*100,2);
-			$prices[] = array("typeID" => (int)$id, "name" => "", "buy" => number_format((float)$buy,2),"sell" => number_format((float)$sell,2), "margin" => $margin);
+			$prices[] = array("typeID" => (int)$id, "buy" => number_format((float)$buy,2),"sell" => number_format((float)$sell,2), "margin" => $margin);
 		}
 		return $prices;
 	}
@@ -50,6 +51,10 @@ class Item_model extends CI_Model {
 	}
 
 	private function getPriceFromDB($itemID) {
+
+	}
+
+	private function addPriceRecord($itemID) {
 
 	}
 }

@@ -7,6 +7,8 @@ class Test extends CI_Controller {
     }
 
     function index() {
-    	$this->item_model->checkTimestamp(35);
+    	$this->load->view('templates/header');
+    	var_dump($this->item_model->getItemPrices(array(35,44)));
+    	$this->load->view('templates/footer');
     }
 }

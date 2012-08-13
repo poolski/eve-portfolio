@@ -77,7 +77,7 @@ class API {
 		}
 		else if($source == "ecapi") {
 			$pattern="/^.*?(\<\?xml)/s";
-			return preg_replace($pattern,'<?xml',$ret);
+			return preg_replace($pattern,'<?xml',$result);
 		}
 	}
 
